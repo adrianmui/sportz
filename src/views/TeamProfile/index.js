@@ -12,9 +12,6 @@ export function TeamProfile() {
   const { teamId } = useParams()
 
   const getTeamFetcher = useAPI(queryGetTeamDetails(teamId), {})
-  // const getTeamScheduleFetcher = useAPI(
-  //   queryGetTeamDetails(teamId, { expand: 'team.schedule.next' })
-  // , {})
   const getTeamRosterFetcher = useAPI(queryGetTeamRoster(teamId), [])
 
   const {

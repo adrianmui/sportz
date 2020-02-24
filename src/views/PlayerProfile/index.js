@@ -37,8 +37,6 @@ export function PlayerProfile() {
     loadPlayerAndSetContext()
   }, [])
 
-  // the proper approach here would be to store the player state into context so we don't
-  // have to prop drill through anonymous functions in every route
   return (
     <PlayerProfileContext.Provider value={context}>
       <Loading loading={playerLoading} error={playerErrorMessage}>

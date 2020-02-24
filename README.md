@@ -2,6 +2,8 @@
 ```
   yarn install
   yarn start
+  <!-- It should be responsive, if you toggle between phone/desktop mode,
+       the cards should collapse correctly. -->
 ```
 
 ## > Requirements
