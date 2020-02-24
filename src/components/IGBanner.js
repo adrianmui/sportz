@@ -1,19 +1,21 @@
 import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Chip } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles({
   root: { 
     width: '100%',
     display: 'flex',
-    flexDirection: 'row',
-    padding: '0.5rem 5rem 2.5rem 5rem',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '0.5rem 5rem 0rem 5rem',
     marginBottom: '1.5rem',
   },
   logo: {
     display: 'flex',
     alignItems: 'center',
+    marginBottom: '0.75rem',
   },
   logo__size: {
     width: '10rem',
@@ -26,13 +28,12 @@ const useStyles = makeStyles({
   },
   desc: {
     flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '0.5rem 5rem 2.5rem 5rem',
+    textAlign: 'center',
   },
   desc__header: {
     flex: 1,
     marginBottom: '1rem',
+    textAlign: 'center',
   },
   desc__secondary: {
     flex: 2,
@@ -49,7 +50,7 @@ export function IGBanner({ avatarUrl, header, secondary = [] }) {
     <div className={classes.root}>
       <div className={classes.logo}>
         <Avatar 
-          src={avatarUrl} 
+          src={avatarUrl}
           imgProps={{ className: classes.logo__image }}
           className={classes.logo__size} 
         />
@@ -59,9 +60,7 @@ export function IGBanner({ avatarUrl, header, secondary = [] }) {
           {header}
         </div>
         <div className={classes.desc__secondary}>
-          {secondary.map(([label, value], index) => (
-            <Chip key={index} label={`${label}: ${value}`} />
-          ))}
+          {secondary}
         </div>
       </div>
     </div>

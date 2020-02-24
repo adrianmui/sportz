@@ -13,9 +13,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(theme => ({
-  table: {
-    minWidth: 650,
-  },
   toolbar__root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
@@ -26,28 +23,36 @@ const useStyles = makeStyles(theme => ({
 }))
 
 // displays row properties in the order of column indexes
-export function DenseTable({ rows, columns, title }) {
+export function DenseTable({
+  rows,
+  columns,
+  title,
+  hideColumns = false,
+  ...props
+}) {
   const classes = useStyles()
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} {...props}>
       {title && (
         <Toolbar className={classes.toolbar__root}>
-          <Typography className={classes.toolbar__title} variant="h6">
+          <Typography className={classes.toolbar__title} variant='h6'>
             {title}
           </Typography>
         </Toolbar>
       )}
-      <Table className={classes.table} size='small' aria-label='a dense table'>
-        <TableHead>
-          <TableRow>
-          {columns.map(({ label }, colIndex) => (
-            <TableCell key={colIndex} align='left'>
-               {label}
-            </TableCell>
-          ))}
-          </TableRow>
-        </TableHead>
+      <Table size='small' aria-label='a dense table'>
+        {!hideColumns && (
+          <TableHead>
+            <TableRow>
+            {columns.map(({ label }, colIndex) => (
+              <TableCell key={colIndex} align='left'>
+                {label}
+              </TableCell>
+            ))}
+            </TableRow>
+          </TableHead>
+        )}
         <TableBody>
           {rows.map((row, rowIndex) => {
             const PropCells = columns.map(({ property, defaultValue }, rowColIndex) => (

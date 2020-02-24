@@ -1,23 +1,22 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useHistory } from 'react-router-dom'
 
 import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Container from '@material-ui/core/Container';
+import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+import Divider from '@material-ui/core/Divider';
+import Hidden from '@material-ui/core/Hidden';
+import MailIcon from '@material-ui/icons/Mail'
+import SearchIcon from '@material-ui/icons/Search';
 
 import { AppRoutes } from 'routes';
 
-const drawerWidth = 240;
-
+const DRAWER_WIDTH = 240;
 const DEFAULT_THEME = createMuiTheme({
   palette: {
     primary: {
@@ -32,26 +31,38 @@ const DEFAULT_THEME = createMuiTheme({
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-  },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    backgroundColor: theme.palette.primary.main,
+    flexGrow: 1,
   },
   drawer: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
+  },
+  control: {
+    padding: theme.spacing(2),
   },
   toolbar: theme.mixins.toolbar,
-  content: {
+  main: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
 }));
+
+function ListItemLink({ label = '', Icon, to })  {
+  const history = useHistory()
+
+  const handleClick = () => history.push(to)
+
+  return (
+    <ListItem button key={label.toLowerCase()} onClick={handleClick}>
+      <ListItemIcon><Icon /></ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItem>
+  )
+}
 
 function AppContents() {
   const classes = useStyles()
@@ -59,36 +70,29 @@ function AppContents() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Drawer
-        className={classes.drawer}
-        variant='permanent'
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor='left'
-      >
+      <Hidden only='xs'>
+        <Drawer
+          className={classes.drawer}
+          variant='permanent'
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          anchor='left'
+        >
+          <div className={classes.toolbar} />
+          <Divider />
+          <List>
+            <ListItemLink label='Teams' Icon={MailIcon} to='/teams' />
+            <ListItemLink label='Search' Icon={SearchIcon} to='/players/search' />
+          </List>
+        </Drawer>
+      </Hidden>
+      <Container maxWidth='md'>
         <div className={classes.toolbar} />
-        <Divider />
-        <List>
-          {['Teams', 'Players'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon><MailIcon /></ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <AppBar position='fixed' className={classes.appBar}>
-        <Toolbar>
-          <Typography variant='h6' noWrap>
-            Sport Radar
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <AppRoutes />
-      </main>
+        <main className={classes.main}>
+          <AppRoutes />
+        </main>
+      </Container>
     </div>
   )   
 }

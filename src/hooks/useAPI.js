@@ -27,7 +27,7 @@ export function useAPI(
   }, [])
 
 
-  const execute = async () => {
+  const execute = async params => {
     callsRef.current += 1
     const callNum = callsRef.current
 
@@ -37,7 +37,7 @@ export function useAPI(
     let response, err
 
     try {
-      response = await fn()
+      response = await fn(params)
     } catch (e) {
       err = e
     }

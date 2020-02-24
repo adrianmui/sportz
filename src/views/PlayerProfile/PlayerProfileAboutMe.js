@@ -1,7 +1,13 @@
 import React from 'react'
-import { Typography, Card, CardContent, Toolbar } from '@material-ui/core'
 
+import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Toolbar from '@material-ui/core/Toolbar'
 import { makeStyles } from '@material-ui/core/styles';
+
+import { useGoogleStyles } from 'styles';
+import { usePlayerProfileContext } from './PlayerProfileContext';
 
 const useStyles = makeStyles(theme => ({
   root: { 
@@ -27,8 +33,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export function PlayerProfileAboutMe({ player = {} }) {
+export function PlayerProfileAboutMe() {
   const classes = useStyles()
+  const googleClasses = useGoogleStyles()
+
+  const { player } = usePlayerProfileContext()
 
   let playerPosition = player.position?.type
     
@@ -42,7 +51,7 @@ export function PlayerProfileAboutMe({ player = {} }) {
     ['Age', player.currentAge],
     ['Number', player.primaryNumber],
     ['Position', playerPosition],
-    ['Dominant Hand', player.shootsCatches],
+    ['D. Hand', player.shootsCatches],
     ['Nationality', player.nationality],
     ['Captain', player.captain ? 'Yes' : 'No'],
     ['Rookie', player.rookie ? 'Yes' : 'No'],
@@ -60,9 +69,9 @@ export function PlayerProfileAboutMe({ player = {} }) {
   ))
 
   return (
-    <Card>
+    <Card className={googleClasses.cards}>
       <Toolbar>
-      <Typography variant="h6">
+      <Typography variant='h6'>
         Player Profile
       </Typography>
     </Toolbar>

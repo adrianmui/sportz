@@ -7,6 +7,7 @@ import { useAPI } from 'hooks/useAPI'
 import { useParams } from 'react-router-dom'
 import { Loading } from 'components/Loading'
 import { DenseTable } from 'components/DenseTable'
+import { useGoogleStyles } from 'styles'
 
 const PLAYER_STAT_COLUMNS = [
   {
@@ -22,17 +23,22 @@ const PLAYER_STAT_COLUMNS = [
     property: 'team.name',
   },
   {
+    label: 'GP',
+    property: 'stat.games',
+    defaultValue: 'N/A',
+  },
+  {
+    label: 'Goals',
+    property: 'stat.goals',
+    defaultValue: 'N/A',
+  },
+  {
     label: 'Assists',
     property: 'stat.assists',
     defaultValue: 'N/A',
   },
   {
-    Goals: 'Goals',
-    property: 'stat.goals',
-    defaultValue: 'N/A',
-  },
-  {
-    label: 'Time On Ice',
+    label: 'Time',
     property: 'stat.timeOnIce',
     defaultValue: 'N/A',
   },
@@ -46,14 +52,11 @@ const PLAYER_STAT_COLUMNS = [
     property: 'stat.losses',
     defaultValue: 'N/A',
   },
-  {
-    label: 'Games Played',
-    property: 'stat.games',
-    defaultValue: 'N/A',
-  },
+
 ]
 
 export function PlayerProfileStats() {
+  const googleStyles = useGoogleStyles()
   const { playerId } = useParams()
 
   const getPlayerStatsFetcher = useAPI(queryGetPlayerCareerStats(playerId), [])
@@ -70,6 +73,7 @@ export function PlayerProfileStats() {
   return (
     <Loading loading={playerStatsLoading} error={playerStatsErrorMessage}>
       <DenseTable
+        className={googleStyles.cards}
         title='Year By Year Stats'
         rows={splits}
         columns={PLAYER_STAT_COLUMNS}

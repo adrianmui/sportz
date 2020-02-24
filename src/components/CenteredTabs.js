@@ -9,6 +9,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
+    borderRadius: '1.5rem',
   },
 })
 
